@@ -1,0 +1,332 @@
+﻿
+@model MachineAssignment.Models.Employee
+@using MachineAssignment.Models;
+
+@{
+    ViewBag.Title = "View Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // If using a layout page
+}
+
+<h1 id="headingtwo">Employee #@Model.EmployeeCode</h1>
+
+@using (Html.BeginForm("UpdateEmployee", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id= "updateEmployeeForm"}))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="container-contact100">
+        <div class="wrap-contact100">
+            @Html.HiddenFor(model => model.EmployeeId, new { @class = "form-control" })
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.FirstName, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.LastName, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.EmailAddress, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.MobileNumber, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.PanNumber, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.PanNumber, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.PassportNumber, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.PassportNumber, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.DateOfBirth, new { @class = "required" })
+                    <div class="input-group date" data-target-input="nearest">
+                        @Html.TextBoxFor(model => model.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", id = "DateOfBirth" })
+                        <span class="input-group-text" id="dateOfBirthPickerIcon"><i class="fas fa-calendar-alt"></i></span>
+                        <div class="input-group-append" data-target="#DateOfBirth" data-toggle="datepicker">
+
+                        </div>
+                    </div>
+                    <p id="SelectedDOBResult"></p>
+                </div>
+
+                <div class="form-group col-sm-6 flex-column d-flex">
+                    @Html.LabelFor(model => model.DateOfJoinee, new { @class = "required" })
+                    <div class="input-group date" data-target-input="nearest">
+                        @Html.TextBoxFor(model => model.DateOfJoinee, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", id = "DateOfJoinee" })
+                        <span class="input-group-text" id="dateOfJoineePickerIcon"><i class="fas fa-calendar-alt"></i></span>
+                        <div class="input-group-append" data-target="#DateOfJoinee" data-toggle="datepicker">
+
+                        </div>
+                    </div>
+                    <p id="SelectedDOJResult"></p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Country.CountryId, "Country", new { @class = "required" })
+                <div class="dropdown">
+                    @Html.DropDownListFor(model => model.Country.CountryId, ViewBag.Countries as SelectList, "Select Country", new { @class = "form-control form-select-sm form-select", id = "ddlCountry", @style = "width: 500px;", aria_expanded = "true" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.State.Row_Id, "State", new { @class = "required" })
+                <div class="dropdown">
+                    @Html.DropDownListFor(model => model.State.Row_Id, ViewBag.State as SelectList, "Select State", new { @class = "form-control form-select-sm form-select", id = "ddlState" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City.Row_Id, "City", new { @class = "required" })
+                <div class="dropdown">
+                    @Html.DropDownListFor(model => model.City.Row_Id, ViewBag.City as SelectList, "Select City", new { @class = "form-control form-select-sm form-select", id = "ddlCity" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProfileImage) <br> <br>
+                <img src="@Url.Content($"~/Content/Uploads/Employee/{@Model.ProfileImage}")" width="150" ,height="400" /> <br><br>
+                @Html.TextBoxFor(model => model.ProfileImageFile, new { type = "file", @class = "form-control", id = "ProfileImageFile" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gender)
+                <div class="form-check">
+                    @Html.RadioButtonFor(model => model.Gender, 0, new { @class = "form-check-input" })
+                    @Html.Label("Male", new { @class = "form-check-label" })
+                </div>
+                <div class="form-check">
+                    @Html.RadioButtonFor(model => model.Gender, 1, new { @class = "form-check-input" })
+                    @Html.Label("Female", new { @class = "form-check-label" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive)
+                @Html.CheckBoxFor(model => model.IsActive)
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="form-group text-center">
+        <input type="submit" value="Update" class="btn btn-primary" id="btn-submit" />
+    </div>
+}
+
+@section scripts{
+    <script>
+
+        $(document).ajaxStart(function () {
+            $("#ajax-loader").show(); // Show the loader when an AJAX request starts
+        }).ajaxStop(function () {
+            $("#ajax-loader").hide(); // Hide the loader when all AJAX requests are completed
+        });
+
+        $(document).ready(function () {
+            $("#ddlState").val("@Model.State.Row_Id").change();
+            $("#ddlCity").val("@Model.City.Row_Id").change();
+            $("ProfileImageFile").val("@Model.ProfileImage").change();
+        })
+
+        $(function () {
+
+            // Event handler for Country dropdown change
+            $("#ddlCountry").change(function () {
+                var countryId = $(this).val();
+                if (countryId) {
+                    $.ajax({
+                        url: "@Url.Action("GetStates", "Home")",
+                        type: "GET",
+                        data: { countryId: countryId },
+                        success: function (data) {
+                            // Clear and populate State dropdown
+                            $("#ddlState").empty();
+                            $("#ddlState").append('<option value="">Select State</option>');
+
+                            $.each(data, function (index, state) {
+                                $("#ddlState").append($('<option></option>').val(state.Row_Id).text(state.StateName));
+                            });
+
+                            // Clear City dropdown
+                            $("#ddlCity").empty();
+                            $("#ddlCity").append('<option value="">Select City</option>');
+                        }
+                    });
+                }
+                else {
+                    // Clear State and City dropdowns
+                    $("#ddlState").empty();
+                    $("#ddlCity").empty();
+                }
+            });
+
+
+            // Event handler for State dropdown change
+            $("#ddlState").change(function () {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: "@Url.Action("GetCities", "Home")",
+                        type: "GET",
+                        data: { stateId: stateId },
+                        success: function (data) {
+                            // Populate City dropdown
+                            console.log("inside success function");
+                            $("#ddlCity").empty();
+                            $("#ddlCity").append('<option value="">Select City</option>');
+                            $.each(data, function (index, city) {
+                                $("#ddlCity").append($('<option></option>').val(city.Row_Id).text(city.CityName));
+                            });
+                        }
+                    });
+                }
+                else {
+                    // Clear City dropdown
+                    $("#ddlCity").empty();
+                }
+            });
+        });
+
+        $('#ProfileImageFile').on('change', function () {
+            const size = (this.files[0].size / 1024).toFixed(2);
+            console.log(size);
+            const fileType = this.files[0]['type'];
+            const validImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+            if (validImageTypes.includes(fileType)) {
+                if (size > 200) {
+                    $("#ProfileImageFile").val("");
+                    console.log("after empty");
+                    $("#imageUploadResult").empty();
+                    $("#imageUploadResult").html('<b style="color:red">' +
+                        'This file size should be less than 200 KB but the size was ' + size + " KB" + '</b>');
+                    $("#ProfileImageFile").empty();
+                } else {
+                    $("#imageUploadResult").html('<b>' +
+                        'This file size is: ' + size + " KB" + '</b>');
+                }
+            } else {
+                $("#ProfileImageFile").val("");
+                $("#imageUploadResult").html('<b style="color:red">' +
+                    'The file should be image ' + '</b>');
+            }
+
+        });
+
+        $(function () {
+            // Initialize DateOfBirth date picker
+            $("#DateOfBirth").datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayHighlight: true,
+                // Add other options for customization, if needed
+            });
+
+            $('#DateOfBirth').on('change', function () {
+                var selectedDate = $(this).val();
+                var todaysDate = new Date().toISOString().slice(0, 10);
+                $('#SelectedDOBResult').empty();
+                console.log(selectedDate);
+                console.log(todaysDate);
+                if (selectedDate >= todaysDate) {
+                    $('#DateOfBirth').val("");
+                    $('#SelectedDOBResult').html('<b style="color:red">' +
+                        'The date should not be greater than today\'s date ' + '</b>');
+                }
+            });
+
+            $(document).ready(function () {
+                // Add click event listener to the date picker icon
+                $("#dateOfBirthPickerIcon").on("click", function () {
+                    $("#DateOfBirth").focus();
+                });
+            });
+
+            $(document).ready(function () {
+                // Add click event listener to the date picker icon
+                $("#dateOfJoineePickerIcon").on("click", function () {
+                    $("#DateOfJoinee").focus();
+                });
+            });
+
+            // Initialize DateOfJoinee date picker
+            $("#DateOfJoinee").datepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayHighlight: true,
+                // Add other options for customization, if needed
+            });
+
+            $('#DateOfJoinee').on('change', function () {
+                var selectedDate = $(this).val();
+                var todaysDate = new Date().toISOString().slice(0, 10);
+                $('#SelectedDOJResult').empty();
+                console.log(selectedDate);
+                console.log(todaysDate);
+                if (selectedDate >= todaysDate) {
+                    $('#DateOfJoinee').val("");
+                    $('#SelectedDOJResult').html('<b style="color:red">' +
+                        'The date should not be greater than today\'s date ' + '</b>');
+                }
+            });
+        });
+
+
+         $(document).ready(function () {
+             // Handle Update button click to show the SweetAlert confirmation
+             $("#btn-submit").click(function (e) {
+                 e.preventDefault();
+                 /*var employeeId = $(this).data("employeeid");*/
+                @*var deleteUrl = '@Url.Action("DeleteEmployee", "Home")';*@
+                 var formData = $("#updateEmployeeForm").serialize();
+                 console.log(formData)
+                 $.ajax({
+                        url: "@Url.Action("UpdateEmployeeCheckValidation", "Home")",
+                     type: "POST",
+                     data: formData,
+                     dataType: "JSON",
+                     success: function (data) {
+                        if (data.result == 'Invalid') {
+                            $("#updateEmployeeForm").submit();
+                            } else {
+                                $.ajax({
+                                    url: "@Url.Action("UpdateEmployee", "Home")",
+                                    type: "POST",
+                                    data: formData,
+                                    dataType: "JSON",
+                                    success: function (data) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Your work has been saved',
+                                            showConfirmButton: false,
+                                            timer: 2200
+                                        }).then(() => {
+                                            window.location = data.url;
+                                        })
+                                    }
+                                });
+                            }
+                     }
+                 });
+
+
+            });
+        });
+    </script>
+}

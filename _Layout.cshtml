@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="~/Content/custom-styles.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <!--<script src="~/Scripts/modernizr-2.8.3.js"></script>-->
+</head>
+@{
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    @if (actionName == "Index")
+                    {
+                        <li class="nav-item">
+                            <h1>Employees</h1>
+                        </li>
+                    }
+                    @if (actionName != "CreateEmployee" && actionName != "ViewEmployee")
+                    {
+                        <li class="nav-item ml-auto">
+                            <a href="@Url.Action("CreateEmployee", "Home")" class="btn btn-primary">Add Employee</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="ajax-loader" class="ajax-loader">
+        <div class="spinner"></div>
+    </div>
+    <div class="container-fluid body-content">
+        @RenderBody()
+        <footer>
+        </footer>
+    </div>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Render the "scripts" section -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>
